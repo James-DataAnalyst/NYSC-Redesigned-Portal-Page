@@ -107,15 +107,15 @@ export default function LoginPage() {
           <motion.div
             initial={{ opacity: 0, y: -18 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-3 rounded-full border border-white/15 bg-white/10 px-4 py-2 backdrop-blur-xl"
+            className="flex items-center gap-3 rounded-full border border-white/15 bg-white/10 px-3 py-2 backdrop-blur-xl sm:px-4"
           >
             <img
               src="/logo.png"
               alt="NYSC"
-              className="h-16 w-auto mx-auto mb-4 object-contain drop-shadow-md"
+              className="h-10 sm:h-16 w-auto object-contain drop-shadow-md"
             />
-            <div className="hidden sm:block">
-              <p className="text-sm md:text-base font-semibold">
+            <div>
+              <p className="text-xs sm:text-sm md:text-base font-semibold">
                 National Youth Service Corps
               </p>
               <p className="text-xs tracking-widest text-emerald-200">
@@ -134,7 +134,7 @@ export default function LoginPage() {
 
         {/* MAIN */}
         <div className="flex flex-1 items-center">
-          <div className="grid w-full gap-10 lg:grid-cols-[1.1fr_480px] items-center">
+          <div className="grid w-full gap-10 items-center justify-center">
             {/* LEFT TEXT */}
             <motion.section
               key={currentSlide}
@@ -142,22 +142,23 @@ export default function LoginPage() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -10 }}
               transition={{ duration: 1.1, ease: "easeInOut", delay: 0.2 }}
-              className="hidden lg:block"
+              className="hidden lg:block absolute left-4 bottom-20 sm:left-6 lg:left-8 xl:left-10 xl:bottom-24 max-w-xl z-30"
             >
-              <h1 className="text-4xl md:text-5xl xl:text-6xl font-semibold max-w-xl">
+              <h1 className="text-4xl md:text-5xl xl:text-6xl font-semibold drop-shadow-[0_4px_20px_rgba(0,0,0,0.6)]">
                 {activeSlide.title}
               </h1>
-              <p className="mt-4 text-white/70 max-w-lg">
+
+              <p className="mt-4 text-white/80 max-w-lg drop-shadow-md">
                 {activeSlide.subtitle}
               </p>
             </motion.section>
 
             {/* LOGIN CARD */}
-            <motion.section className="mx-auto w-full max-w-md">
+            <motion.section className="mx-auto w-full max-w-md lg:max-w-lg">
               <Card className="bg-white/10 backdrop-blur-xl border border-emerald-500/40 rounded-2xl shadow-[0_0_0_1px_rgba(16,185,129,0.25)]">
                 <CardContent className="p-6 sm:p-8">
                   <div className="text-center mb-6">
-                    <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-2xl border border-emerald-400/30 bg-emerald-400/10 backdrop-blur-md shadow-md">
+                    <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center opacity-80 rounded-2xl border border-emerald-400/30 bg-emerald-400/10 backdrop-blur-md shadow-md">
                       <img
                         src="/logo.png"
                         alt="NYSC"

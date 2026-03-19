@@ -128,24 +128,20 @@ function NotificationDropdown({ open, notifications, onClose, isLight }) {
           />
 
           <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 100 }}
-            transition={{ duration: 0.25 }}
+            initial={{ opacity: 0, y: 10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 8, scale: 0.98 }}
+            transition={{ duration: 0.2 }}
             className={`
-              z-[9999] border transition-all
-              ${
-                isLight
-                  ? "bg-white border-slate-200"
-                  : "bg-slate-900 border-white/10"
-              }
+    z-[9999] border shadow-xl transition-all
+    ${isLight ? "bg-white border-slate-200" : "bg-slate-900 border-white/10"}
 
-              /* MOBILE (bottom sheet) */
-              fixed bottom-0 left-0 right-0 w-full max-h-[80vh] overflow-y-auto rounded-t-3xl p-4
+    fixed bottom-0 left-0 right-0 w-full sm:h-auto sm:overflow-visible rounded-t-3xl p-4
 
-              /* DESKTOP */
-              sm:absolute sm:right-0 sm:top-16 sm:w-[320px] sm:max-h-[400px] sm:overflow-y-auto sm:rounded-2xl sm:p-3
-            `}
+    sm:absolute sm:left-auto sm:bottom-auto 
+    sm:absolute sm:top-16 sm:left-4 sm:w-[320px]
+    sm:max-h-[700px] sm:rounded-2xl sm:p-2  pb-4 sm:pb-5
+  `}
           >
             {/* DRAG HANDLE (mobile only) */}
             <div className="mb-3 flex justify-center sm:hidden">
@@ -176,7 +172,7 @@ function NotificationDropdown({ open, notifications, onClose, isLight }) {
             </div>
 
             {/* LIST */}
-            <div className="space-y-2 pb-4">
+            <div className="space-y-3 pb-6">
               {notifications.map((item) => (
                 <div
                   key={item.id}
@@ -297,7 +293,6 @@ function IDCardFront({ user }) {
                   />
                 </div>
               </div>
-
               <div className="mt-auto pt-3">
                 <p className="text-[8px] uppercase tracking-[0.24em] text-[#6e766f] sm:text-[10px]">
                   Corps Member Signature
@@ -305,7 +300,6 @@ function IDCardFront({ user }) {
                 <div className="mt-2 h-[1px] bg-[#82b997]" />
               </div>
             </div>
-
             <div className="grid content-start gap-2 sm:gap-4">
               <div className="grid gap-2 sm:grid-cols-2 sm:gap-4">
                 <IDField label="Full Name" value={user.fullName} />
@@ -320,7 +314,6 @@ function IDCardFront({ user }) {
                   value={user.stateOfDeployment}
                 />
               </div>
-
               <div className="mt-1 grid gap-3 border-t border-[#d7dbd6] pt-3 sm:mt-2 sm:grid-cols-3 sm:gap-5 sm:pt-5">
                 <div>
                   <p className="text-[8px] uppercase tracking-[0.24em] text-[#6e766f] sm:text-[10px]">
@@ -350,7 +343,6 @@ function IDCardFront({ user }) {
     </div>
   );
 }
-
 function IDCardBack({ user }) {
   return (
     <div className="id-card scale-[0.75] sm:scale-100 origin-top">
@@ -362,7 +354,6 @@ function IDCardBack({ user }) {
               <div className="absolute right-[-5%] top-0 h-full w-[40%] skew-x-[-36deg] bg-[#e0c320]" />
               <div className="absolute left-[22%] top-0 h-full w-[18%] skew-x-[-36deg] bg-[#127332]/95" />
             </div>
-
             <div className="relative z-10 flex items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
               <p className="text-[14px] font-extrabold uppercase tracking-[0.02em] text-white sm:text-[18px]">
                 National Youth Service Corps
@@ -374,13 +365,11 @@ function IDCardBack({ user }) {
               />
             </div>
           </div>
-
           <div className="grid h-[calc(100%-78px)] grid-cols-[1fr_96px] gap-3 p-3 sm:grid-cols-[1fr_160px] sm:gap-5 sm:p-6">
             <div className="rounded-[22px] border border-[#d7dbd6] bg-white/70 p-4 sm:p-6">
               <p className="text-[10px] leading-6 text-[#4e5852] sm:text-[12px] sm:leading-7">
                 Emergency/NOK: <span className="font-bold">{user.gsm}</span>
               </p>
-
               <p className="mt-4 text-[10px] leading-6 text-[#4e5852] sm:text-[12px] sm:leading-7">
                 This identity card is an official document and related only to
                 the person described. Impersonation of the authorized holder,
@@ -388,7 +377,6 @@ function IDCardBack({ user }) {
                 of this card for criminal offences will be met with appropriate
                 sanctions.
               </p>
-
               <div className="mt-5">
                 <p className="text-[10px] font-semibold text-[#1d6f30] sm:text-[12px]">
                   If found, please return to:
@@ -397,7 +385,6 @@ function IDCardBack({ user }) {
                   National Directorate Headquarters
                 </p>
               </div>
-
               <div className="mt-6 border-t border-[#d7dbd6] pt-4">
                 <p className="text-[8px] uppercase tracking-[0.22em] text-[#6e766f] sm:text-[10px]">
                   Card Verification
@@ -408,12 +395,10 @@ function IDCardBack({ user }) {
                 </p>
               </div>
             </div>
-
             <div className="flex flex-col justify-between gap-3 rounded-[22px] border border-[#d7dbd6] bg-[#f3f5f2] p-3 sm:p-4">
               <div className="rounded-[16px] border border-[#d7dbd6] bg-white p-2">
                 <FakeQR />
               </div>
-
               <div className="rounded-[16px] border border-[#d7dbd6] bg-white px-3 py-3 text-center">
                 <p className="text-[8px] uppercase tracking-[0.22em] text-[#6e766f] sm:text-[10px]">
                   Valid Till
@@ -429,7 +414,6 @@ function IDCardBack({ user }) {
     </div>
   );
 }
-
 function HiddenPDFCard({ cardRef, children }) {
   return (
     <div
@@ -441,13 +425,11 @@ function HiddenPDFCard({ cardRef, children }) {
     </div>
   );
 }
-
 function IDCardModal({ open, onClose, user, isLight }) {
   const frontPreviewRef = useRef(null);
   const backPreviewRef = useRef(null);
   const frontPdfRef = useRef(null);
   const backPdfRef = useRef(null);
-
   const exportCardToCanvas = async (element) => {
     return html2canvas(element, {
       scale: 2,
@@ -458,108 +440,88 @@ function IDCardModal({ open, onClose, user, isLight }) {
       windowHeight: element.scrollHeight,
     });
   };
-
   const handleDownloadPDF = async () => {
     if (!frontPdfRef.current || !backPdfRef.current) return;
-
     const frontCanvas = await exportCardToCanvas(frontPdfRef.current);
     const backCanvas = await exportCardToCanvas(backPdfRef.current);
-
     const pdf = new jsPDF({
       orientation: "landscape",
       unit: "px",
       format: [frontCanvas.width, frontCanvas.height],
     });
-
     const addCanvasToPage = (canvas, addNewPage = false) => {
       if (addNewPage) {
         pdf.addPage([canvas.width, canvas.height], "landscape");
       }
-
       const imgData = canvas.toDataURL("image/png");
       const pageWidth = pdf.internal.pageSize.getWidth();
       const pageHeight = pdf.internal.pageSize.getHeight();
-
       pdf.addImage(imgData, "PNG", 0, 0, pageWidth, pageHeight);
     };
-
     addCanvasToPage(frontCanvas, false);
     addCanvasToPage(backCanvas, true);
-
     pdf.save("nysc-id-card.pdf");
   };
   const handlePrint = async () => {
     if (!frontPdfRef.current || !backPdfRef.current) return;
-
     const frontCanvas = await exportCardToCanvas(frontPdfRef.current);
     const backCanvas = await exportCardToCanvas(backPdfRef.current);
-
     const frontImg = frontCanvas.toDataURL("image/png");
     const backImg = backCanvas.toDataURL("image/png");
-
     const printWindow = window.open("", "_blank");
     if (!printWindow) return;
-
-    printWindow.document.write(`
-    <html>
-      <head>
-        <title>NYSC ID Card</title>
-        <style>
- @page {
-  size: A4 landscape;
-  margin: 0;
-}
-
-html, body {
-  margin: 0;
-  padding: 0;
-  background: white;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  -webkit-print-color-adjust: exact;
-  print-color-adjust: exact;
-}
-
-.page {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  page-break-after: always;
-}
-
-.page:last-child {
-  page-break-after: auto;
-}
-
-img {
-  width: 95%;
-  height: auto;
-  object-fit: contain;
-}
-        </style>
-      </head>
-      <body>
-        <div class="page"><img src="${frontImg}" alt="Front ID Card" /></div>
-        <div class="page"><img src="${backImg}" alt="Back ID Card" /></div>
-      </body>
-    </html>
-  `);
-
+    printWindow.document.write(` 
+<html> 
+<head> 
+<title>NYSC ID Card</title> 
+<style> 
+@page { 
+size: A4 landscape; 
+margin: 0; 
+} 
+html, body { 
+margin: 0; 
+padding: 0; 
+background: white; 
+} 
+body { 
+display: flex; 
+flex-direction: column; 
+align-items: center; 
+justify-content: center; 
+-webkit-print-color-adjust: exact; 
+print-color-adjust: exact; 
+} 
+.page { 
+width: 100%; 
+height: 100vh; 
+display: flex; 
+align-items: center; 
+justify-content: center; 
+page-break-after: always; 
+} 
+.page:last-child { 
+page-break-after: auto; 
+} 
+img { 
+width: 95%; 
+height: auto; 
+object-fit: contain; 
+} 
+</style> 
+</head> 
+<body> 
+<div class="page"><img src="${frontImg}" alt="Front ID Card" /></div> 
+<div class="page"><img src="${backImg}" alt="Back ID Card" /></div> 
+</body> 
+</html> 
+`);
     printWindow.document.close();
-
     printWindow.onload = () => {
       printWindow.focus();
       printWindow.print();
     };
   };
-
   return (
     <AnimatePresence>
       {open && (
@@ -570,7 +532,6 @@ img {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           />
-
           <motion.div
             className="fixed inset-0 z-[140] flex items-center justify-center p-3 sm:p-4"
             initial={{ opacity: 0, y: 12 }}
@@ -598,7 +559,6 @@ img {
                     full front and back format.
                   </p>
                 </div>
-
                 <div className="flex flex-wrap gap-2">
                   <Button
                     type="button"
@@ -630,7 +590,6 @@ img {
                   </Button>
                 </div>
               </div>
-
               <div
                 className={`max-h-[85vh] sm:max-h-[78vh] overflow-auto rounded-3xl border p-4 sm:p-5 ${
                   isLight
@@ -647,11 +606,9 @@ img {
                   </div>
                 </div>
               </div>
-
               <HiddenPDFCard cardRef={frontPdfRef}>
                 <IDCardFront user={user} />
               </HiddenPDFCard>
-
               <HiddenPDFCard cardRef={backPdfRef}>
                 <IDCardBack user={user} />
               </HiddenPDFCard>
@@ -662,7 +619,6 @@ img {
     </AnimatePresence>
   );
 }
-
 function SummaryRow({ label, value, isLight }) {
   return (
     <div
@@ -720,31 +676,24 @@ export default function DashboardPage() {
   const [mounted, setMounted] = useState(false);
   const { theme, resolvedTheme, setTheme } = useTheme();
   const [countdown, setCountdown] = useState("");
-
   useEffect(() => {
     const interval = setInterval(() => {
       const now = new Date();
-
       const timeString = now.toLocaleTimeString("en-US", {
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",
         hour12: true,
       });
-
       setCountdown(timeString);
     }, 1000);
-
     return () => clearInterval(interval);
   }, []);
-
   useEffect(() => {
     setMounted(true);
   }, []);
-
   useEffect(() => {
     let isMounted = true;
-
     async function loadData() {
       setLoading(true);
       const data = await getDashboardData();
@@ -753,17 +702,13 @@ export default function DashboardPage() {
         setLoading(false);
       }
     }
-
     loadData();
-
     return () => {
       isMounted = false;
     };
   }, []);
-
   const currentTheme = mounted ? resolvedTheme || theme || "dark" : "dark";
   const isLight = currentTheme === "light";
-
   if (loading || !dashboard) {
     return (
       <div
@@ -783,9 +728,7 @@ export default function DashboardPage() {
       </div>
     );
   }
-
   const { user, meta, notices, notifications } = dashboard;
-
   return (
     <div
       className={`min-h-screen transition-colors duration-300 ${
@@ -796,11 +739,11 @@ export default function DashboardPage() {
     >
       <div className="flex min-h-screen">
         <main className="relative z-10 flex-1">
-          <div className="mx-auto max-w-[1700px] px-3 py-4 sm:p-5 lg:p-8">
+          <div className="mx-auto max-w-[1700px] px-3 py-4 sm:p-5 lg:p-8 overflow-visible">
             <header
-              className={`relative z-[80] mb-6 rounded-[28px] p-3 sm:p-4 xl:p-6 transition-all
-bg-[linear-gradient(135deg,#065f46_0%,#047857_40%,#065f46_100%)]
-shadow-[0_20px_60px_rgba(6,95,70,0.55)]
+              className={`relative z-[200] mb-6 rounded-[28px] overflow-visible p-3 sm:p-4 xl:p-6 transition-all 
+bg-[linear-gradient(135deg,#065f46_0%,#047857_40%,#065f46_100%)] 
+shadow-[0_20px_60px_rgba(6,95,70,0.55)] 
 border border-white/10`}
             >
               {/* Animated NYSC background */}
@@ -826,11 +769,10 @@ border border-white/10`}
                     </p>
                   </div>
                 </div>
-
                 <div className="mt-3 sm:mt-0 flex items-center justify-between sm:justify-end w-full gap-3 sm:gap-4">
                   {/* BUTTON ROW (HORIZONTAL) */}
-                  <div className="flex items-center gap-2 sm:gap-3">
-                    <div className="relative">
+                  <div className="flex items-center gap-2 sm:gap-3 relative">
+                    <div className="relative z-[999]">
                       <button
                         type="button"
                         onClick={() => setShowNotifications((prev) => !prev)}
@@ -838,10 +780,9 @@ border border-white/10`}
                       >
                         <Bell className="h-3.5 w-3.5 sm:h-5 sm:w-5" />
                         <span className="absolute -right-2 -top-2 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-red-500 px-1 text-[9px] font-semibold text-white animate-premium-pulse">
-                          3
+                          {notifications.length}
                         </span>
                       </button>
-
                       <NotificationDropdown
                         open={showNotifications}
                         notifications={notifications}
@@ -849,7 +790,6 @@ border border-white/10`}
                         isLight={isLight}
                       />
                     </div>
-
                     <button
                       type="button"
                       onClick={() =>
@@ -863,24 +803,22 @@ border border-white/10`}
                         <Moon className="h-3.5 w-3.5 sm:h-5 sm:w-5" />
                       )}
                     </button>
-
                     <Button
                       type="button"
                       onClick={() => setShowIDCard(true)}
                       className="h-9 sm:h-10 xl:h-12 
-                                px-3 sm:px-4 xl:px-5 
-                                text-xs sm:text-sm 
-                                rounded-xl xl:rounded-2xl 
-                                bg-white text-emerald-700 
-                                shadow-[0_8px_25px_rgba(255,255,255,0.35)]
-                                hover:bg-emerald-50
-                                transition-all duration-300"
+px-3 sm:px-4 xl:px-5 
+text-xs sm:text-sm 
+rounded-xl xl:rounded-2xl 
+bg-white text-emerald-700 
+shadow-[0_8px_25px_rgba(255,255,255,0.35)] 
+hover:bg-emerald-50 
+transition-all duration-300"
                     >
                       <CreditCard className="mr-2 h-4 w-4" />
                       View ID Card
                     </Button>
                   </div>
-
                   {/* RIGHT: DATE + TIME */}
                   <div className="pr-1 sm:pr-0 text-[10px] sm:text-xs text-white/70 text-right leading-tight">
                     {new Date().toLocaleDateString("en-US", {
@@ -888,7 +826,6 @@ border border-white/10`}
                       month: "short",
                       day: "numeric",
                     })}
-
                     <div className="text-[11px] font-medium tracking-tight">
                       {countdown}
                     </div>
@@ -896,7 +833,6 @@ border border-white/10`}
                 </div>
               </div>
             </header>
-
             <section className="relative z-10 mb-6 grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
               <motion.div
                 whileHover={{ y: -4 }}
@@ -936,7 +872,6 @@ border border-white/10`}
                       dashboard.
                     </p>
                   </div>
-
                   <div className="relative mx-auto sm:mx-0 sm:ml-auto">
                     <div className="absolute inset-0 rounded-full bg-emerald-400/20 blur-xl" />
                     <img
@@ -948,7 +883,6 @@ border border-white/10`}
                     />
                   </div>
                 </div>
-
                 <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                   <StatPill
                     icon={UserCircle2}
@@ -1005,7 +939,6 @@ border border-white/10`}
                     isLight={isLight}
                   />
                 </div>
-
                 <div
                   className={`mt-5 rounded-3xl border p-4 text-sm leading-7 transition-all duration-300 ${
                     isLight
@@ -1036,7 +969,6 @@ border border-white/10`}
                     to camp. It is compulsory for registration in camp.
                   </p>
                 </div>
-
                 <div className="mt-4 flex flex-wrap gap-2">
                   <Button className="h-10 rounded-2xl bg-emerald-600 px-5 text-white hover:bg-emerald-500">
                     Print Slip
@@ -1061,7 +993,6 @@ border border-white/10`}
                   </Button>
                 </div>
               </motion.div>
-
               <div className="grid gap-4">
                 <motion.div
                   whileHover={{ y: -4 }}
@@ -1082,7 +1013,6 @@ border border-white/10`}
                       Full Record Summary
                     </h3>
                   </div>
-
                   <div className="grid gap-2">
                     <SummaryRow
                       label="Matric No."
@@ -1126,7 +1056,6 @@ border border-white/10`}
                     />
                   </div>
                 </motion.div>
-
                 <div
                   className={`rounded-3xl border p-5 backdrop-blur-xl transition-all duration-300 ${
                     isLight
@@ -1139,7 +1068,6 @@ border border-white/10`}
                   >
                     Quick Actions
                   </h3>
-
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                     <QuickAction
                       icon={FileEdit}
@@ -1165,7 +1093,6 @@ border border-white/10`}
                 </div>
               </div>
             </section>
-
             <section className="grid gap-4">
               {notices.map((notice) => (
                 <NoticeCard key={notice.id} notice={notice} isLight={isLight} />
@@ -1174,7 +1101,6 @@ border border-white/10`}
           </div>
         </main>
       </div>
-
       <IDCardModal
         open={showIDCard}
         onClose={() => setShowIDCard(false)}

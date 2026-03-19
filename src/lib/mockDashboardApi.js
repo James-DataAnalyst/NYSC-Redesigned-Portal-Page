@@ -66,21 +66,33 @@ export async function getDashboardData() {
         notifications: [
           {
             id: 1,
-            title: "Monthly clearance scheduled",
-            message: "Your next LGA clearance is set for Monday, 09/03/2026.",
-            time: "2h ago",
+            title: "ID card available",
+            message: "You can now view and download your corps member ID card.",
+            time: "just now",
+            read: false,
           },
           {
             id: 2,
-            title: "ID card available",
-            message: "You can now view and download your corps member ID card.",
-            time: "1d ago",
+            title: "Biometric verification reminder",
+            message:
+              "Ensure you complete your biometric verification before the next clearance deadline.",
+            time: "1h ago",
+            read: false,
           },
           {
             id: 3,
-            title: "Portal update",
-            message: "Dark mode and premium dashboard redesign concept loaded.",
-            time: "Just now",
+            title: "Monthly clearance scheduled",
+            message: "Your next LGA clearance is set for Monday, 04/03/2026.",
+            time: "2h ago",
+            read: false,
+          },
+          {
+            id: 4,
+            title: "PPA assignment confirmed",
+            message:
+              "Your Place of Primary Assignment (PPA) has been approved. Please report immediately.",
+            time: "5d ago",
+            read: false,
           },
         ],
         sidebar: [
