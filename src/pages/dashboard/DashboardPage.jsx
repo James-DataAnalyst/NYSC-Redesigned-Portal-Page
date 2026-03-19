@@ -719,6 +719,24 @@ export default function DashboardPage() {
   const [showIDCard, setShowIDCard] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { theme, resolvedTheme, setTheme } = useTheme();
+  const [countdown, setCountdown] = useState("");
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+
+      const timeString = now.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+      });
+
+      setCountdown(timeString);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     setMounted(true);
@@ -780,86 +798,101 @@ export default function DashboardPage() {
         <main className="relative z-10 flex-1">
           <div className="mx-auto max-w-[1700px] px-3 py-4 sm:p-5 lg:p-8">
             <header
-              className={`relative z-[80] mb-6 rounded-[28px] p-3 sm:p-4 xl:p-6 transition-all ${
-                isLight
-                  ? "bg-gradient-to-r from-emerald-600 via-emerald-700 to-green-800 text-white shadow-[0_20px_60px_rgba(16,185,129,0.35)]"
-                  : "bg-gradient-to-r from-emerald-700 via-emerald-800 to-green-900 text-white shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
-              }`}
+              className={`relative z-[80] mb-6 rounded-[28px] p-3 sm:p-4 xl:p-6 transition-all
+bg-[linear-gradient(135deg,#065f46_0%,#047857_40%,#065f46_100%)]
+shadow-[0_20px_60px_rgba(6,95,70,0.55)]
+border border-white/10`}
             >
               {/* Animated NYSC background */}
               <div className="pointer-events-none absolute inset-0 overflow-hidden">
-                <div className="absolute whitespace-nowrap text-[120px] font-extrabold uppercase opacity-[0.04] animate-marquee">
+                <div className="absolute whitespace-nowrap text-[120px] font-extrabold uppercase text-white/10 tracking-widest animate-marquee mix-blend-overlay">
                   NYSC • NYSC • NYSC • NYSC • NYSC • NYSC • NYSC • NYSC
                 </div>
               </div>{" "}
-              <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
-                <div className="flex items-start gap-3">
+              <div className="flex flex-col justify-center gap-3 sm:gap-4 xl:flex-row xl:items-center xl:justify-between min-h-[130px] sm:min-h-[unset]">
+                <div className="flex items-start justify-between w-full">
                   <div>
-                    <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs uppercase tracking-[0.18em] text-white backdrop-blur-md">
-                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                      {meta.dashboardTitle}
+                    <div className="flex items-center justify-between w-full">
+                      <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-2 py-0.5 text-[10px] sm:text-xs uppercase tracking-[0.18em] text-white backdrop-blur-md">
+                        <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                        {meta.dashboardTitle}
+                      </div>
                     </div>
-                    <h1 className="text-lg sm:text-xl xl:text-3xl font-semibold text-white">
+                    <h1 className="mt-1 text-2xl sm:text-xl xl:text-3xl font-semibold text-white leading-[1.25]">
                       Welcome back, Isaac
                     </h1>
-                    <p className="mt-0.5 text-[11px] sm:text-xs text-white/80">
+                    <p className="mt-1 text-[11px] sm:text-xs text-white/80">
                       Manage your service year efficiently.
                     </p>
                   </div>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                  <div className="rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white backdrop-blur-md">
-                    <span className="font-small text-white">Today’s Date:</span>{" "}
-                    {meta.currentDate}
-                  </div>
-                  <div className="relative">
+                <div className="mt-3 sm:mt-0 flex items-center justify-between sm:justify-end w-full gap-3 sm:gap-4">
+                  {/* BUTTON ROW (HORIZONTAL) */}
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="relative">
+                      <button
+                        type="button"
+                        onClick={() => setShowNotifications((prev) => !prev)}
+                        className="relative rounded-xl border border-white/20 bg-white/10 p-1.5 sm:p-3 text-white backdrop-blur-md transition hover:bg-white/20"
+                      >
+                        <Bell className="h-3.5 w-3.5 sm:h-5 sm:w-5" />
+                        <span className="absolute -right-2 -top-2 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-red-500 px-1 text-[9px] font-semibold text-white animate-premium-pulse">
+                          3
+                        </span>
+                      </button>
+
+                      <NotificationDropdown
+                        open={showNotifications}
+                        notifications={notifications}
+                        onClose={() => setShowNotifications(false)}
+                        isLight={isLight}
+                      />
+                    </div>
+
                     <button
                       type="button"
-                      onClick={() => setShowNotifications((prev) => !prev)}
-                      className="relative rounded-2xl border border-white/20 bg-white/10 p-3 text-white backdrop-blur-md transition hover:bg-white/20"
+                      onClick={() =>
+                        setTheme(currentTheme === "dark" ? "light" : "dark")
+                      }
+                      className="rounded-xl border border-white/20 bg-white/10 p-1.5 sm:p-3 text-white backdrop-blur-md transition hover:bg-white/20"
                     >
-                      <Bell className="h-5 w-5" />
-                      <span className="absolute -right-1 -top-1 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-semibold text-white animate-premium-pulse">
-                        3
-                      </span>
+                      {currentTheme === "dark" ? (
+                        <Sun className="h-3.5 w-3.5 sm:h-5 sm:w-5" />
+                      ) : (
+                        <Moon className="h-3.5 w-3.5 sm:h-5 sm:w-5" />
+                      )}
                     </button>
 
-                    <NotificationDropdown
-                      open={showNotifications}
-                      notifications={notifications}
-                      onClose={() => setShowNotifications(false)}
-                      isLight={isLight}
-                    />
+                    <Button
+                      type="button"
+                      onClick={() => setShowIDCard(true)}
+                      className="h-9 sm:h-10 xl:h-12 
+                                px-3 sm:px-4 xl:px-5 
+                                text-xs sm:text-sm 
+                                rounded-xl xl:rounded-2xl 
+                                bg-white text-emerald-700 
+                                shadow-[0_8px_25px_rgba(255,255,255,0.35)]
+                                hover:bg-emerald-50
+                                transition-all duration-300"
+                    >
+                      <CreditCard className="mr-2 h-4 w-4" />
+                      View ID Card
+                    </Button>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setTheme(currentTheme === "dark" ? "light" : "dark")
-                    }
-                    className="rounded-2xl border border-white/20 bg-white/10 p-3 text-white backdrop-blur-md transition hover:bg-white/20"
-                  >
-                    {currentTheme === "dark" ? (
-                      <Sun className="h-5 w-5" />
-                    ) : (
-                      <Moon className="h-5 w-5" />
-                    )}
-                  </button>
+                  {/* RIGHT: DATE + TIME */}
+                  <div className="pr-1 sm:pr-0 text-[10px] sm:text-xs text-white/70 text-right leading-tight">
+                    {new Date().toLocaleDateString("en-US", {
+                      weekday: "short",
+                      month: "short",
+                      day: "numeric",
+                    })}
 
-                  <Button
-                    type="button"
-                    onClick={() => setShowIDCard(true)}
-                    className="
-  h-10 xl:h-12 
-  px-3 xl:px-5 
-  text-sm 
-  rounded-xl xl:rounded-2xl 
-  bg-white text-emerald-700 shadow-[0_10px_30px_rgba(255,255,255,0.25)] hover:bg-emerald-100"
-                  >
-                    <CreditCard className="mr-2 h-4 w-4" />
-                    View ID Card
-                  </Button>
+                    <div className="text-[11px] font-medium tracking-tight">
+                      {countdown}
+                    </div>
+                  </div>
                 </div>
               </div>
             </header>
