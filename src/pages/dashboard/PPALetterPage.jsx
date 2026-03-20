@@ -210,10 +210,14 @@ export default function PPALetterPage() {
           </p>
 
           <div className="mt-6 space-y-3">
-            <Row label="Supervisor" value={ppa.supervisor} />
-            <Row label="Reporting Date" value={ppa.reportingDate} />
-            <Row label="Status" value={ppa.status} />
-            <Row label="Corps Member" value={user.fullName} />
+            <Row label="Supervisor" value={ppa.supervisor} isLight={isLight} />
+            <Row
+              label="Reporting Date"
+              value={ppa.reportingDate}
+              isLight={isLight}
+            />
+            <Row label="Status" value={ppa.status} isLight={isLight} />
+            <Row label="Corps Member" value={user.fullName} isLight={isLight} />
           </div>
 
           {/* ACTIONS */}
@@ -283,28 +287,33 @@ function Info({ label, value, icon: Icon }) {
     </div>
   );
 }
-function Row({ label, value }) {
+function Row({ label, value, isLight }) {
   return (
     <div
-      className="
+      className={`
       flex items-center justify-between 
       rounded-xl px-4 py-3
-
-      bg-slate-100 border border-slate-300
-
-      dark:bg-white/[0.04] dark:border-white/10
-
-      transition-all duration-200
-      hover:bg-slate-200 dark:hover:bg-white/[0.06]
-      "
+      border transition-all duration-200
+      ${
+        isLight
+          ? "bg-slate-100 border-slate-300 hover:bg-slate-100/80"
+          : "bg-white/[0.04] border-white/10 hover:bg-white/[0.06]"
+      }
+      `}
     >
-      {/* LABEL */}
-      <span className="text-sm font-medium text-slate-700 dark:text-white/60">
+      <span
+        className={`text-sm font-medium ${
+          isLight ? "text-slate-800" : "text-white/70"
+        }`}
+      >
         {label}
       </span>
 
-      {/* VALUE */}
-      <span className="text-sm font-semibold text-slate-900 dark:text-white">
+      <span
+        className={`text-sm font-semibold ${
+          isLight ? "text-slate-900" : "text-white"
+        }`}
+      >
         {value}
       </span>
     </div>
