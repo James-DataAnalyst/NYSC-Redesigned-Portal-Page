@@ -45,10 +45,7 @@ const notifications = [
     read: false,
   },
 ];
-const user = {
-  fullName: "Isaac",
-  photo: "/profile.jpg",
-};
+
 // =============================
 // MAIN PAGE
 // =============================
@@ -65,6 +62,7 @@ export default function ChangePasswordPage() {
   const [success, setSuccess] = useState(false);
   const [showIDCard, setShowIDCard] = useState(false);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const { theme, resolvedTheme, setTheme } = useTheme();
   const isLight = (resolvedTheme || theme) === "light";
@@ -97,12 +95,45 @@ export default function ChangePasswordPage() {
 
   useEffect(() => {
     const loadData = async () => {
+      setLoading(true);
       const data = await getDashboardData();
       setUser(data.user);
+      setLoading(false);
     };
 
     loadData();
   }, []);
+
+  if (loading || !user) {
+    return (
+      <div
+        className={`flex min-h-screen items-center justify-center ${
+          isLight ? "bg-slate-50 text-slate-900" : "bg-slate-950 text-white"
+        }`}
+      >
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.25 }}
+          className={`rounded-3xl border px-6 py-5 backdrop-blur-xl ${
+            isLight
+              ? "border-slate-200 bg-white shadow-[0_14px_40px_rgba(15,23,42,0.08)]"
+              : "border-white/10 bg-white/5"
+          }`}
+        >
+          <div className="flex items-center gap-3">
+            {/* Spinner */}
+            <div className="h-4 w-4 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+
+            {/* Text */}
+            <span className="text-sm font-medium">
+              Loading Password Settings...
+            </span>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div

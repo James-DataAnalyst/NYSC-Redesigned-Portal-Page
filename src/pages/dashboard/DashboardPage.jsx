@@ -716,15 +716,22 @@ export default function DashboardPage() {
           isLight ? "bg-slate-50 text-slate-900" : "bg-slate-950 text-white"
         }`}
       >
-        <div
-          className={`rounded-3xl border px-6 py-5 backdrop-blur-xl ${
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.25 }}
+          className={`rounded-3xl border px-6 py-5 backdrop-blur-xl flex items-center gap-3 ${
             isLight
               ? "border-slate-200 bg-white shadow-[0_14px_40px_rgba(15,23,42,0.08)]"
               : "border-white/10 bg-white/5"
           }`}
         >
-          Loading dashboard...
-        </div>
+          {/* 🔥 SPINNER */}
+          <div className="h-4 w-4 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+
+          {/* TEXT */}
+          <span className="text-sm font-medium">Loading dashboard...</span>
+        </motion.div>
       </div>
     );
   }
