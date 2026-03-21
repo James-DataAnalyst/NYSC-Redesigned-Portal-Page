@@ -320,7 +320,7 @@ export default function DashboardLayout() {
 
       {/* ================= MOBILE HEADER (ONLY ADDITION) ================= */}
       <div
-        className={`lg:hidden flex items-center justify-between px-4 py-3 border-b ${
+        className={`lg:hidden fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-4 py-3 border-b ${
           isLight ? "border-slate-200 bg-white" : "border-white/10 bg-slate-950"
         }`}
       >
@@ -504,7 +504,7 @@ export default function DashboardLayout() {
           </div>
         </aside>
 
-        <main className="relative z-10 flex-1">
+        <main className="relative z-10 flex-1 pt-[60px] lg:pt-0">
           <div className="flex min-h-screen flex-col">
             <div className="flex-1">
               <Outlet

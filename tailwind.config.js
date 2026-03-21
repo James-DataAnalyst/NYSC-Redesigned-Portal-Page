@@ -1,4 +1,5 @@
 export default {
+  darkMode: "class", // ADD THIS LINE
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {
@@ -9,8 +10,6 @@ export default {
         },
         accent: "#22c55e",
         glass: "rgba(255,255,255,0.05)",
-
-        //ADDED THIS
         border: "hsl(var(--border))",
       },
     },

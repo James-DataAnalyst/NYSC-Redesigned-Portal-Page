@@ -418,10 +418,10 @@ export default function SAEDRegistrationPage() {
         </div>
 
         {/* MAIN CONTENT */}
-        <div className="grid grid-cols-1 xl:grid-cols-[1.05fr_0.95fr] gap-6">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 items-start">
           {/* LEFT */}
           <div className="space-y-6">
-            <Card isLight={isLight}>
+            <Card isLight={isLight} className="h-full">
               <SectionTitle
                 icon={BookOpenCheck}
                 title="In-Camp Training Registration"
@@ -547,7 +547,7 @@ export default function SAEDRegistrationPage() {
               </div>
             </Card>
 
-            <Card isLight={isLight}>
+            <Card isLight={isLight} className="h-full">
               <SectionTitle
                 icon={CalendarDays}
                 title="SAED Training Schedule"
@@ -599,7 +599,7 @@ export default function SAEDRegistrationPage() {
               </div>
             </Card>
 
-            <Card isLight={isLight}>
+            <Card isLight={isLight} className="h-full">
               <SectionTitle
                 icon={Users}
                 title="Instructor List"
@@ -647,11 +647,64 @@ export default function SAEDRegistrationPage() {
                 ))}
               </div>
             </Card>
+            <Card isLight={isLight} className="h-full">
+              <SectionTitle
+                icon={Sparkles}
+                title="SAED Resources & Tips"
+                isLight={isLight}
+              />
+
+              <div className="grid gap-3">
+                {[
+                  {
+                    title: "Business Plan Guide",
+                    desc: "Learn how to write a simple business plan for your SAED project.",
+                  },
+                  {
+                    title: "Startup Funding",
+                    desc: "Explore NYSC and government grants available for corps members.",
+                  },
+                  {
+                    title: "Skill Certification",
+                    desc: "Complete your training to qualify for certification and grants.",
+                  },
+                  {
+                    title: "Entrepreneurship Tips",
+                    desc: "Start small, validate your idea, and grow gradually.",
+                  },
+                ].map((item, index) => (
+                  <motion.div
+                    key={index}
+                    whileHover={{ y: -2 }}
+                    className={`rounded-[22px] border p-4 ${
+                      isLight
+                        ? "border-slate-200/70 bg-slate-50/70"
+                        : "border-white/10 bg-white/5"
+                    }`}
+                  >
+                    <h4
+                      className={`text-sm font-semibold ${
+                        isLight ? "text-slate-900" : "text-white"
+                      }`}
+                    >
+                      {item.title}
+                    </h4>
+                    <p
+                      className={`mt-1 text-sm ${
+                        isLight ? "text-slate-600" : "text-white/65"
+                      }`}
+                    >
+                      {item.desc}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            </Card>
           </div>
 
           {/* RIGHT */}
           <div className="space-y-6">
-            <Card isLight={isLight}>
+            <Card isLight={isLight} className="h-full">
               <SectionTitle
                 icon={ClipboardCheck}
                 title="Training Attendance Tracker"
@@ -735,7 +788,7 @@ export default function SAEDRegistrationPage() {
               </div>
             </Card>
 
-            <Card isLight={isLight}>
+            <Card isLight={isLight} className="h-full">
               <SectionTitle
                 icon={Sparkles}
                 title="Skill Progress Tracker"
@@ -784,7 +837,7 @@ export default function SAEDRegistrationPage() {
               </div>
             </Card>
 
-            <Card isLight={isLight}>
+            <Card isLight={isLight} className="h-full">
               <SectionTitle
                 icon={MapPin}
                 title="Training Location & Batch Grouping"
@@ -847,7 +900,7 @@ export default function SAEDRegistrationPage() {
               </div>
             </Card>
 
-            <Card isLight={isLight}>
+            <Card isLight={isLight} className="h-full">
               <SectionTitle
                 icon={Award}
                 title="Certificate Status"
@@ -906,7 +959,7 @@ export default function SAEDRegistrationPage() {
 
 /* ---------------------------- UI HELPERS ---------------------------- */
 
-function Card({ children, isLight }) {
+function Card({ children, isLight, className = "" }) {
   return (
     <motion.div
       whileHover={{ y: -2 }}
@@ -914,7 +967,7 @@ function Card({ children, isLight }) {
         isLight
           ? "border-slate-200/70 bg-white/78 shadow-[0_8px_28px_rgba(15,23,42,0.04)] backdrop-blur-xl"
           : "border-white/10 bg-white/5"
-      }`}
+      } ${className}`}
     >
       {children}
     </motion.div>

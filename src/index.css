@@ -84,3 +84,20 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+html,
+body {
+  height: 100%;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  background: #f8fafc; /* light mode background */
+}
+
+.dark html,
+.dark body {
+  background: #020617; /* dark mode background */
+}
+
+body {
+  overscroll-behavior: none;
+}

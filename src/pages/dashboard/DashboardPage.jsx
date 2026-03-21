@@ -122,16 +122,20 @@ function NotificationDropdown({ open, notifications, onClose, isLight }) {
       {open && (
         <>
           {/* BACKDROP (mobile only) */}
-          <div
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             className="fixed inset-0 z-[9998] bg-black/40 backdrop-blur-sm sm:hidden"
             onClick={onClose}
           />
 
           <motion.div
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "100%" }}
-            transition={{ type: "spring", stiffness: 260, damping: 25 }}
+            initial={{ y: 80, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 80, opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
             className={`
   z-[9999] border shadow-xl transition-all
   ${isLight ? "bg-white border-slate-200" : "bg-slate-900 border-white/10"}
@@ -682,12 +686,15 @@ export default function DashboardPage() {
   useEffect(() => {
     if (showNotifications) {
       document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
     }
 
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
     };
   }, [showNotifications]);
 

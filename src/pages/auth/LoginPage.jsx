@@ -43,6 +43,13 @@ export default function LoginPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    slides.forEach((slide) => {
+      const img = new Image();
+      img.src = slide.image;
+    });
+  }, []);
+
+  useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 8000);
@@ -82,24 +89,27 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-slate-950 text-white">
+    <div
+      className="absolute inset-0"
+      style={{
+        backgroundImage: `url(${activeSlide.image})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
       <AnimatePresence mode="wait">
-        <motion.div
+        <motion.img
           key={currentSlide}
-          className="absolute inset-0"
-          initial={{ opacity: 0, scale: 1.06 }}
+          src={activeSlide.image}
+          className="absolute inset-0 h-full w-full object-cover"
+          initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 1.02 }}
-          transition={{ duration: 1.4, ease: "easeInOut" }}
-          style={{
-            backgroundImage: `url(${activeSlide.image})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2 }}
         />
       </AnimatePresence>
 
-      <div className="absolute inset-0 bg-black/40" />
+      <div className="absolute inset-0 bg-black/30 dark:bg-black/50" />
 
       <div className="relative z-20 mx-auto flex min-h-screen w-full max-w-[1600px] flex-col px-4 sm:px-6 md:px-8 lg:px-12 py-6">
         {/* HEADER */}
@@ -115,10 +125,10 @@ export default function LoginPage() {
               className="h-10 sm:h-16 w-auto object-contain drop-shadow-md"
             />
             <div>
-              <p className="text-xs sm:text-sm md:text-base font-semibold">
+              <p className="text-xs sm:text-sm md:text-base font-semibold text-white">
                 National Youth Service Corps
               </p>
-              <p className="text-xs tracking-widest text-emerald-200">
+              <p className="text-xs tracking-widest text-emerald-300">
                 SERVICE AND HUMILITY
               </p>
             </div>
@@ -126,7 +136,7 @@ export default function LoginPage() {
 
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="h-11 w-11 rounded-xl border border-white/20 bg-white/10 flex items-center justify-center"
+            className="h-11 w-11 rounded-xl border border-white/20 bg-white/10 text-white flex items-center justify-center backdrop-blur-xl"
           >
             {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
           </button>
@@ -142,7 +152,7 @@ export default function LoginPage() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -10 }}
               transition={{ duration: 1.1, ease: "easeInOut", delay: 0.2 }}
-              className="hidden lg:block absolute left-4 bottom-20 sm:left-6 lg:left-8 xl:left-10 xl:bottom-24 max-w-xl z-30"
+              className="hidden lg:block absolute left-4 bottom-20 sm:left-6 lg:left-8 xl:left-10 xl:bottom-24 max-w-xl z-30 text-white"
             >
               <h1 className="text-4xl md:text-5xl xl:text-6xl font-semibold drop-shadow-[0_4px_20px_rgba(0,0,0,0.6)]">
                 {activeSlide.title}
@@ -165,7 +175,9 @@ export default function LoginPage() {
                         className="h-12 w-auto object-contain"
                       />
                     </div>
-                    <h2 className="text-2xl font-semibold">Welcome Back</h2>
+                    <h2 className="text-2xl font-semibold text-white">
+                      Welcome Back
+                    </h2>
                     <p className="text-sm text-white/70">
                       Sign in to continue to your NYSC portal
                     </p>
@@ -175,15 +187,20 @@ export default function LoginPage() {
                     <div>
                       <div className="flex items-center gap-2 mb-1">
                         <Mail className="h-4 w-4 text-emerald-300" />
-                        <label className="text-sm">Email Address</label>
+                        <label className="text-sm text-white/90">
+                          Email Address
+                        </label>
                       </div>
                       <Input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Enter your email"
-                        className="h-12 rounded-lg border border-white/20 bg-white/10 
-                        hover:border-emerald-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-400/30 transition"
+                        className="h-12 rounded-xl border border-white/25 bg-white/15 backdrop-blur-xl
+placeholder:text-white/50 text-white
+hover:border-emerald-400 focus:border-emerald-400
+focus:ring-2 focus:ring-emerald-400/30
+transition-all duration-300"
                       />
                     </div>
 
@@ -191,7 +208,9 @@ export default function LoginPage() {
                       <div className="flex items-center justify-between mb-1">
                         <div className="flex items-center gap-2">
                           <Lock className="h-4 w-4 text-emerald-300" />
-                          <label className="text-sm">Password</label>
+                          <label className="text-sm text-white/90">
+                            Password
+                          </label>
                         </div>
                         <span className="text-xs text-emerald-300 cursor-pointer">
                           Forgot?
@@ -202,8 +221,11 @@ export default function LoginPage() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Enter your password"
-                        className="h-12 rounded-lg border border-white/20 bg-white/10 
-                        hover:border-emerald-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-400/30 transition"
+                        className="h-12 rounded-xl border border-white/25 bg-white/15 backdrop-blur-xl
+placeholder:text-white/50 text-white
+hover:border-emerald-400 focus:border-emerald-400
+focus:ring-2 focus:ring-emerald-400/30
+transition-all duration-300"
                       />
                     </div>
 
@@ -223,7 +245,7 @@ export default function LoginPage() {
                     <Button
                       onClick={handleLogin}
                       disabled={loading}
-                      className="w-full h-12 bg-emerald-600 hover:bg-emerald-500 rounded-lg"
+                      className="w-full h-12 bg-emerald-600 hover:bg-emerald-500 rounded-lg shadow-lg shadow-emerald-500/30 transition-all duration-300"
                     >
                       {loading ? "Signing in..." : "Login to Portal"}
                       {!loading && <ArrowRight className="ml-2 h-4 w-4" />}
