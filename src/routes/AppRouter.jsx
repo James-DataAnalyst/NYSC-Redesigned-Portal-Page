@@ -7,6 +7,8 @@ import DashboardLayout from "@/pages/dashboard/DashboardLayout";
 import CourseCorrectionPage from "@/pages/dashboard/CourseCorrectionPage";
 import PPALetterPage from "@/pages/dashboard/PPALetterPage";
 import LGAClearancePage from "@/pages/dashboard/LGAClearancePage";
+import DisciplinaryCasePage from "@/pages/dashboard/DisciplinaryCasePage";
+import SAEDRegistrationPage from "@/pages/dashboard/SAEDRegistrationPage";
 
 export default function AppRouter() {
   return (
@@ -21,6 +23,8 @@ export default function AppRouter() {
           <Route path="/course-correction" element={<CourseCorrectionPage />} />
           <Route path="/ppa-letter" element={<PPALetterPage />} />
           <Route path="/lga-clearance" element={<LGAClearancePage />} />
+          <Route path="/disciplinary-case" element={<DisciplinaryCasePage />} />
+          <Route path="/saed-registration" element={<SAEDRegistrationPage />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" />} />

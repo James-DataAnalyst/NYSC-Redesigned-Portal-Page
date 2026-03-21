@@ -26,20 +26,22 @@ function NotificationDropdown({ open, notifications, onClose, isLight }) {
           />
 
           <motion.div
-            initial={{ opacity: 0, y: 10, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 8, scale: 0.98 }}
-            transition={{ duration: 0.2 }}
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "100%" }}
+            transition={{ type: "spring", stiffness: 260, damping: 25 }}
             className={`
-    z-[9999] border shadow-xl transition-all
-    ${isLight ? "bg-white border-slate-200" : "bg-slate-900 border-white/10"}
+  z-[9999] border shadow-xl transition-all
+  ${isLight ? "bg-white border-slate-200" : "bg-slate-900 border-white/10"}
 
-    fixed bottom-0 left-0 right-0 w-full sm:h-auto sm:overflow-visible rounded-t-3xl p-4
+  fixed bottom-0 left-0 right-0 w-full
+  max-h-[80vh] flex flex-col
+  rounded-t-3xl p-4
 
-    sm:absolute sm:left-auto sm:bottom-auto 
-    sm:absolute sm:top-16 sm:left-4 sm:w-[320px]
-    sm:max-h-[700px] sm:rounded-2xl sm:p-2  pb-4 sm:pb-5
-  `}
+  sm:absolute sm:left-auto sm:bottom-auto 
+  sm:top-16 sm:left-4 sm:w-[320px]
+  sm:max-h-[700px] sm:rounded-2xl sm:p-2 pb-4 sm:pb-5
+`}
           >
             {/* DRAG HANDLE (mobile only) */}
             <div className="mb-3 flex justify-center sm:hidden">
@@ -70,7 +72,7 @@ function NotificationDropdown({ open, notifications, onClose, isLight }) {
             </div>
 
             {/* LIST */}
-            <div className="space-y-2 pb-4">
+            <div className="space-y-2 pb-4 overflow-y-auto pr-1 max-h-[65vh]">
               {notifications.map((item) => (
                 <div
                   key={item.id}
@@ -351,6 +353,18 @@ export default function HeaderPage({
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (showNotifications) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showNotifications]);
 
   useEffect(() => {
     const interval = setInterval(() => {

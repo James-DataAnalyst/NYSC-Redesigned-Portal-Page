@@ -58,10 +58,6 @@ const notifications = [
     read: false,
   },
 ];
-const user = {
-  fullName: "Isaac",
-  photo: "/profile.jpg",
-};
 
 export default function CourseCorrectionPage() {
   const [dashboard, setDashboard] = useState(null);
