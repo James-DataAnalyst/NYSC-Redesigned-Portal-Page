@@ -175,13 +175,13 @@ export default function LGAClearancePage() {
 
   return (
     <div
-      className={`min-h-screen ${
+      className={`min-h-screen overflow-x-hidden ${
         isLight
           ? "bg-[radial-gradient(circle_at_top,rgba(16,185,129,0.05),transparent_28%),linear-gradient(to_bottom_right,#f8fafc,#ffffff,#f1f5f9)]"
           : "bg-slate-950"
       }`}
     >
-      <div className="mx-auto max-w-[1700px] p-4 sm:p-5 lg:p-8 space-y-8">
+      <div className="mx-auto max-w-[1700px] px-3.5 sm:px-5 py-2.5 sm:py-3.5 lg:py-8 space-y-8 overflow-x-hidden">
         <HeaderPage
           user={user}
           meta={meta}
@@ -424,28 +424,32 @@ export default function LGAClearancePage() {
                 y: searchFocused ? -1 : 0,
               }}
               transition={{ duration: 0.18 }}
-              className={`group flex items-center gap-3 px-4 sm:px-5 py-3.5 rounded-[24px] border transition-all duration-200 ${
-                isLight
-                  ? "bg-white/75 border-slate-200/70 shadow-[0_3px_18px_rgba(15,23,42,0.05)] backdrop-blur-xl focus-within:border-emerald-300/90 focus-within:shadow-[0_10px_30px_rgba(16,185,129,0.10)]"
-                  : "bg-black/40 border-white/10"
-              }`}
+              className={`
+        group flex items-center gap-3 px-4 sm:px-5 py-3.5 rounded-[24px] border transition-all duration-200
+                 ${
+                   isLight
+                     ? "bg-[linear-gradient(180deg,rgba(255,255,255,0.7),rgba(248,250,252,0.9))] border-slate-200/60 shadow-[0_2px_12px_rgba(15,23,42,0.04)] backdrop-blur-xl focus-within:border-emerald-300/70 focus-within:shadow-[0_8px_24px_rgba(16,185,129,0.10)]"
+                     : "bg-black/40 border-white/10"
+                 } `}
             >
+              {/* SEARCH ICON */}
               <div
-                className={`flex h-10 w-10 items-center justify-center rounded-2xl transition ${
+                className={`flex h-10 w-10 items-center justify-center rounded-2xl ${
                   isLight
-                    ? "bg-slate-100 text-slate-500 group-focus-within:bg-emerald-50 group-focus-within:text-emerald-600"
+                    ? "bg-slate-100/70 text-slate-500 group-focus-within:bg-emerald-50/80 group-focus-within:text-emerald-600"
                     : "bg-white/5 text-white/60"
                 }`}
               >
                 <Search className="h-4 w-4" />
               </div>
 
+              {/* INPUT */}
               <input
-                placeholder="Search by month, for example January 2026"
-                className={`w-full bg-transparent outline-none text-sm sm:text-[15px] ${
+                placeholder="Search month e.g. Jan 2026"
+                className={`flex-1 min-w-0 bg-transparent outline-none text-[16px] truncate sm:text-sm ${
                   isLight
-                    ? "text-slate-900 placeholder:text-slate-400"
-                    : "text-white placeholder:text-white/35"
+                    ? "text-slate-900 placeholder:text-slate-400 placeholder:font-normal placeholder:tracking-tight"
+                    : "text-white placeholder:text-white/35 placeholder:tracking-tight"
                 }`}
                 value={search}
                 onFocus={() => setSearchFocused(true)}
@@ -455,94 +459,32 @@ export default function LGAClearancePage() {
                 onChange={(e) => setSearch(e.target.value)}
               />
 
-              <div
-                className={`hidden sm:flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] ${
-                  isLight
-                    ? "bg-slate-100 text-slate-500"
-                    : "bg-white/5 text-white/45"
-                }`}
-              >
-                <ArrowRight className="h-3 w-3" />
-                Quick find
-              </div>
-            </motion.div>
-
-            {/* SEARCH SUGGESTIONS */}
-            <AnimatePresence>
-              {searchFocused && searchSuggestions.length > 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                  animate={{ opacity: 1, y: 8, scale: 1 }}
-                  exit={{ opacity: 0, y: 4, scale: 0.98 }}
-                  transition={{ duration: 0.18 }}
-                  className={`absolute left-0 right-0 mt-2 rounded-[24px] border overflow-hidden ${
-                    isLight
-                      ? "border-slate-200/70 bg-white/92 shadow-[0_16px_40px_rgba(15,23,42,0.08)] backdrop-blur-xl"
-                      : "border-white/10 bg-slate-900/95"
-                  }`}
-                >
-                  <div
-                    className={`px-4 pt-4 pb-2 text-[11px] uppercase tracking-[0.16em] ${
-                      isLight ? "text-slate-400" : "text-white/35"
-                    }`}
+              {/* CLEAR BUTTON */}
+              <AnimatePresence>
+                {search && (
+                  <motion.button
+                    type="button"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.15 }}
+                    onClick={() => setSearch("")}
+                    className={`
+              flex items-center justify-center h-9 w-9 rounded-xl transition
+              ${
+                isLight
+                  ? "bg-slate-100 hover:bg-slate-200 text-slate-500"
+                  : "bg-white/5 hover:bg-white/10 text-white/60"
+              }
+            `}
                   >
-                    Suggestions
-                  </div>
-
-                  <div className="pb-2">
-                    {searchSuggestions.map((item) => (
-                      <button
-                        key={item.id}
-                        type="button"
-                        onMouseDown={() => setSearch(item.month)}
-                        className={`w-full px-4 py-3 text-left flex items-center justify-between transition ${
-                          isLight
-                            ? "hover:bg-slate-50 text-slate-700"
-                            : "hover:bg-white/5 text-white/80"
-                        }`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div
-                            className={`flex h-9 w-9 items-center justify-center rounded-xl ${
-                              isLight
-                                ? "bg-slate-100 text-slate-500"
-                                : "bg-white/5 text-white/50"
-                            }`}
-                          >
-                            <CalendarDays className="h-4 w-4" />
-                          </div>
-                          <div>
-                            <div className="text-sm font-medium">
-                              {item.month}
-                            </div>
-                            <div
-                              className={`text-xs ${
-                                isLight ? "text-slate-400" : "text-white/35"
-                              }`}
-                            >
-                              Clearance record
-                            </div>
-                          </div>
-                        </div>
-
-                        <div
-                          className={`text-xs rounded-full px-2.5 py-1 border ${
-                            isLight
-                              ? "border-emerald-100 bg-emerald-50 text-emerald-600"
-                              : "border-emerald-500/20 bg-emerald-500/10 text-emerald-300"
-                          }`}
-                        >
-                          {item.status}
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                    ✕
+                  </motion.button>
+                )}
+              </AnimatePresence>
+            </motion.div>
           </div>
         </div>
-
         {/* TIMELINE */}
         <div className="space-y-8">
           {monthGroups.map((group, groupIndex) => (
@@ -567,7 +509,7 @@ export default function LGAClearancePage() {
               </div>
 
               {/* LINE + ITEMS */}
-              <div className="relative pl-8 sm:pl-10">
+              <div className="relative pl-7 sm:pl-10 max-w-full">
                 <div
                   className={`absolute left-3 sm:left-4 top-2 bottom-2 w-px ${
                     isLight
@@ -588,7 +530,7 @@ export default function LGAClearancePage() {
                     >
                       {/* node */}
                       <div
-                        className={`absolute -left-[25px] sm:-left-[30px] top-7 h-4 w-4 rounded-full ring-4 ${
+                        className={`absolute -left-5 sm:-left-[30px] top-7 h-4 w-4 rounded-full ring-4 ${
                           isLight
                             ? "bg-emerald-500 ring-white shadow-[0_0_0_1px_rgba(226,232,240,1)]"
                             : "bg-emerald-400 ring-slate-950"

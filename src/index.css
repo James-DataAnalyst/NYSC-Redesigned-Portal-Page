@@ -6,7 +6,16 @@
   :root {
     --radius: 1rem;
   }
+  html,
+  body {
+    overflow-x: hidden;
+  }
 
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
   html,
   body,
   #root {
