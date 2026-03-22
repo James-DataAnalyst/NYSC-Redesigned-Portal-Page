@@ -21,21 +21,21 @@ function NotificationDropdown({ open, notifications, onClose, isLight }) {
         <>
           {/* BACKDROP (mobile only) */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[9998] bg-black/40 backdrop-blur-sm sm:hidden"
-            onClick={onClose}
-          />
-
-          <motion.div
-            initial={{ y: 80, opacity: 0 }}
+            initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 80, opacity: 0 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-            className={`
-  z-[9999] border shadow-xl transition-all
+            exit={{ y: 50, opacity: 0 }}
+            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+            drag="y"
+            dragDirectionLock
+            dragConstraints={{ top: 0, bottom: 300 }}
+            dragElastic={0.25}
+            onDragEnd={(e, info) => {
+              if (info.offset.y > 120) {
+                onClose();
+              }
+            }}
+            style={{ willChange: "transform, opacity" }}
+            className={`z-[9999] border shadow-xl transition-all transform-gpu
   ${isLight ? "bg-white border-slate-200" : "bg-slate-900 border-white/10"}
 
   fixed bottom-0 left-0 right-0 w-full
@@ -44,12 +44,11 @@ function NotificationDropdown({ open, notifications, onClose, isLight }) {
 
   sm:absolute sm:left-auto sm:bottom-auto 
   sm:top-16 sm:left-4 sm:w-[320px]
-  sm:max-h-[700px] sm:rounded-2xl sm:p-2 pb-4 sm:pb-5
-`}
+  sm:max-h-[700px] sm:rounded-2xl sm:p-2 pb-4 sm:pb-5`}
           >
             {/* DRAG HANDLE (mobile only) */}
             <div className="mb-3 flex justify-center sm:hidden">
-              <div className="h-1.5 w-10 rounded-full bg-slate-300 dark:bg-white/20" />
+              <div className="h-1.5 w-12 rounded-full bg-slate-300 dark:bg-white/20 transition-all duration-300 hover:w-16" />
             </div>
 
             {/* HEADER */}
@@ -362,14 +361,17 @@ export default function HeaderPage({
     if (showNotifications) {
       document.body.style.overflow = "hidden";
       document.body.style.touchAction = "none";
+      document.body.style.paddingRight = "0px";
     } else {
       document.body.style.overflow = "";
       document.body.style.touchAction = "";
+      document.body.style.paddingRight = "";
     }
 
     return () => {
       document.body.style.overflow = "";
       document.body.style.touchAction = "";
+      document.body.style.paddingRight = "";
     };
   }, [showNotifications]);
 

@@ -648,15 +648,15 @@ export default function PortalLandingPage() {
 
       {/* FOOTER */}
       <footer className="relative z-10 border-t border-slate-200/70 bg-white/70 backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/50">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-4 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between dark:text-white/45">
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-4 text-xs text-slate-500 dark:text-white/45 sm:flex-row sm:items-center sm:justify-between">
           {/* LEFT */}
-          <p>
+          <p className="text-center sm:text-left">
             © {new Date().getFullYear()} National Youth Service Corps. All
             rights reserved.
           </p>
 
           {/* RIGHT */}
-          <p className="text-right">
+          <p className="text-center sm:text-right">
             Designed & Developed by{" "}
             <span className="text-emerald-600 dark:text-emerald-400 font-medium">
               Isaac James
