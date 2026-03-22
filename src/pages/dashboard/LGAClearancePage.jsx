@@ -55,33 +55,50 @@ const notifications = [
 ];
 
 const clearanceData = [
-  { id: 1, month: "April 2025", status: "Present" },
-  { id: 2, month: "May 2025", status: "Present" },
-  { id: 3, month: "June 2025", status: "Present" },
-  { id: 4, month: "July 2025", status: "Present" },
-  { id: 5, month: "August 2025", status: "Present" },
-  { id: 6, month: "September 2025", status: "Present" },
-  { id: 7, month: "October 2025", status: "Present" },
-  { id: 8, month: "November 2025", status: "Present" },
-  { id: 9, month: "December 2025", status: "Present" },
-  { id: 10, month: "January 2026", status: "Present" },
+  { id: 1, month: "June 2025", status: "Present" },
+  { id: 2, month: "July 2025", status: "Present" },
+  { id: 3, month: "August 2025", status: "Present" },
+  { id: 4, month: "September 2025", status: "Present" },
+  { id: 5, month: "October 2025", status: "Present" },
+  { id: 6, month: "November 2025", status: "Present" },
+  { id: 7, month: "December 2025", status: "Present" },
+  { id: 8, month: "January 2026", status: "Present" },
+  { id: 9, month: "Feburary 2026", status: "Present" },
+  { id: 10, month: "March 2026", status: "Present" },
 ];
 
-const nextClearanceDate = new Date("2026-03-04T09:00:00");
+const totalMonths = clearanceData.length;
+
+const presentMonths = clearanceData.filter(
+  (item) => item.status === "Present",
+).length;
+
+const clearanceRate = Math.round((presentMonths / totalMonths) * 100);
+const attendanceStreak = presentMonths; // since all are present in order
+const lastClearance = clearanceData[clearanceData.length - 1]?.month || "-";
+const serviceProgress = `${presentMonths} / 12 Months`;
+
+const nextClearanceDate = new Date(2026, 3, 11, 9, 0, 0);
+const formattedDate = nextClearanceDate.toLocaleDateString("en-GB", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+});
 
 function getCountdown(targetDate) {
   const now = new Date();
   const diff = targetDate.getTime() - now.getTime();
 
   if (diff <= 0) {
-    return { days: 0, hours: 0, minutes: 0, expired: true };
+    return { days: 0, hours: 0, minutes: 0, seconds: 0 };
   }
 
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((diff / (1000 * 60)) % 60);
-
-  return { days, hours, minutes, expired: false };
+  return {
+    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+    minutes: Math.floor((diff / (1000 * 60)) % 60),
+    seconds: Math.floor((diff / 1000) % 60),
+  };
 }
 
 function getMonthGroups(data) {
@@ -97,12 +114,38 @@ function getMonthGroups(data) {
   ].filter((group) => group.items.length > 0);
 }
 
+function AnimatedCounter({ value, isLight }) {
+  return (
+    <div className="relative h-[34px] overflow-hidden">
+      <AnimatePresence initial={false}>
+        <motion.div
+          key={value}
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -20, opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className={`absolute inset-0 flex items-center justify-center text-xl sm:text-2xl font-semibold ${
+            isLight ? "text-slate-900" : "text-white"
+          }`}
+        >
+          {value}
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export default function LGAClearancePage() {
   const [dashboard, setDashboard] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showIDCard, setShowIDCard] = useState(false);
   const [search, setSearch] = useState("");
-  const [countdown, setCountdown] = useState(getCountdown(nextClearanceDate));
+  const [countdown, setCountdown] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
   const [searchFocused, setSearchFocused] = useState(false);
 
   const { theme, resolvedTheme } = useTheme();
@@ -118,9 +161,13 @@ export default function LGAClearancePage() {
   }, []);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCountdown(getCountdown(nextClearanceDate));
-    }, 1000 * 30);
+    const updateCountdown = () => {
+      const timeLeft = getCountdown(nextClearanceDate);
+      setCountdown(timeLeft);
+    };
+
+    updateCountdown(); // run immediately after mount
+    const timer = setInterval(updateCountdown, 1000);
 
     return () => clearInterval(timer);
   }, []);
@@ -146,6 +193,29 @@ export default function LGAClearancePage() {
   ).length;
   const totalCount = filtered.length || 1;
   const progress = Math.round((completedCount / totalCount) * 100);
+
+  const statsCards = [
+    {
+      title: "Clearance Rate",
+      value: `${clearanceRate}%`,
+      icon: TrendingUp,
+    },
+    {
+      title: "Attendance Streak",
+      value: `${attendanceStreak} months`,
+      icon: Sparkles,
+    },
+    {
+      title: "Last Clearance",
+      value: lastClearance,
+      icon: CalendarDays,
+    },
+    {
+      title: "Service Progress",
+      value: serviceProgress,
+      icon: Target,
+    },
+  ];
 
   if (loading || !dashboard) {
     return (
@@ -208,49 +278,36 @@ export default function LGAClearancePage() {
                 : "border-white/10 bg-white/5"
             }`}
           >
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {[
-                {
-                  title: "Clearance Rate",
-                  value: "100%",
-                  icon: TrendingUp,
-                },
-                {
-                  title: "Attendance Streak",
-                  value: "10 months",
-                  icon: Sparkles,
-                },
-                {
-                  title: "Last Clearance",
-                  value: "Jan 2026",
-                  icon: CalendarDays,
-                },
-              ].map((card, i) => (
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              {statsCards.map((card, i) => (
                 <motion.div
                   key={i}
                   whileHover={{ y: -3, scale: 1.01 }}
                   transition={{ duration: 0.18 }}
-                  className={`rounded-[24px] border p-4 relative overflow-hidden ${
+                  className={`h-full rounded-[24px] border p-4 relative overflow-hidden ${
                     isLight
                       ? "border-slate-200/70 bg-white/80 shadow-[0_2px_14px_rgba(15,23,42,0.04)]"
                       : "border-white/10 bg-white/5"
                   }`}
                 >
                   <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" />
+
                   <card.icon
-                    className={`h-5 w-5 mb-3 ${
+                    className={`h-4 w-4 mb-2 ${
                       isLight ? "text-slate-500" : "text-white/70"
                     }`}
                   />
+
                   <p
-                    className={`text-xs ${
+                    className={`text-[11px] sm:text-xs ${
                       isLight ? "text-slate-500" : "text-white/50"
                     }`}
                   >
                     {card.title}
                   </p>
+
                   <h2
-                    className={`text-xl font-semibold tracking-tight ${
+                    className={`text-[16px] sm:text-xl font-semibold tracking-tight whitespace-nowrap ${
                       isLight ? "text-slate-900" : "text-white"
                     }`}
                   >
@@ -346,7 +403,7 @@ export default function LGAClearancePage() {
                     isLight ? "text-slate-900" : "text-white"
                   }`}
                 >
-                  04 Mar 2026
+                  {formattedDate}
                 </h3>
                 <p
                   className={`mt-1 text-sm ${
@@ -372,28 +429,26 @@ export default function LGAClearancePage() {
               </div>
             </div>
 
-            <div className="mt-6 grid grid-cols-3 gap-3">
+            <div className="mt-6 grid grid-cols-4 gap-3">
               {[
-                { label: "Days", value: countdown.days },
-                { label: "Hours", value: countdown.hours },
-                { label: "Minutes", value: countdown.minutes },
+                { label: "Days", value: countdown.days || 0 },
+                { label: "Hours", value: countdown.hours || 0 },
+                { label: "Minutes", value: countdown.minutes || 0 },
+                { label: "Seconds", value: countdown.seconds || 0 },
               ].map((unit) => (
-                <motion.div
+                <div
                   key={unit.label}
-                  whileHover={{ scale: 1.02 }}
-                  className={`rounded-2xl border px-4 py-4 text-center ${
+                  className={`rounded-2xl border px-3 py-3 sm:px-4 sm:py-4 text-center ${
                     isLight
                       ? "border-white/70 bg-white/70 shadow-[0_2px_10px_rgba(15,23,42,0.04)]"
                       : "border-white/10 bg-white/5"
                   }`}
                 >
-                  <div
-                    className={`text-2xl font-semibold ${
-                      isLight ? "text-slate-900" : "text-white"
-                    }`}
-                  >
-                    {unit.value}
-                  </div>
+                  <AnimatedCounter
+                    value={String(unit.value).padStart(2, "0")}
+                    isLight={isLight}
+                  />
+
                   <div
                     className={`text-[11px] mt-1 ${
                       isLight ? "text-slate-500" : "text-white/50"
@@ -401,7 +456,7 @@ export default function LGAClearancePage() {
                   >
                     {unit.label}
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
 

@@ -320,7 +320,7 @@ export default function DisciplinaryCasePage() {
           {/* TOP SUMMARY */}
           <div className="grid grid-cols-1 xl:grid-cols-[1.3fr_1fr] gap-6">
             <Card isLight={isLight}>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <StatCard
                   isLight={isLight}
                   title="Total Cases"
@@ -341,6 +341,13 @@ export default function DisciplinaryCasePage() {
                   value={String(summary.resolved)}
                   subtitle="Closed records"
                   icon={CheckCircle2}
+                />
+                <StatCard
+                  isLight={isLight}
+                  title="Resolution Rate"
+                  value={`${summary.percent}%`}
+                  subtitle="Cases successfully resolved"
+                  icon={Clock3}
                 />
               </div>
 
@@ -512,7 +519,7 @@ export default function DisciplinaryCasePage() {
           </div>
 
           {/* INFO + ACTIONS */}
-          <div className="grid grid-cols-1 xl:grid-cols-[1fr_1fr] gap-6">
+          <div className="grid grid-cols-1 xl:grid-cols-[1.3fr_1fr] gap-6">
             <Card isLight={isLight}>
               <SectionTitle
                 icon={User}
@@ -895,7 +902,7 @@ function SectionTitle({ icon: Icon, title, isLight, noMargin = false }) {
 function StatCard({ title, value, subtitle, icon: Icon, isLight }) {
   return (
     <div
-      className={`rounded-[24px] border p-4 ${
+      className={`rounded-[20px] border p-3 sm:p-4 ${
         isLight
           ? "border-slate-200/70 bg-slate-50/80"
           : "border-white/10 bg-white/5"

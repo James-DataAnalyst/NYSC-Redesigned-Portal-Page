@@ -11,7 +11,7 @@ export async function getDashboardData() {
           callupNo: "NYSC/FE/2025/000558",
           stateCode: "NS/25A/1133",
           nhisNo: "7622652-0",
-          hmo: "ZUMA HEALTH TRUST",
+          hmo: "ZUMA HT",
           stateOfOrigin: "Kwara",
           stateOfDeployment: "Nasarawa",
           bloodGroup: "B-",

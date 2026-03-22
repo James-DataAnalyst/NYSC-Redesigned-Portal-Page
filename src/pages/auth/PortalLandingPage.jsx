@@ -246,10 +246,10 @@ export default function PortalLandingPage() {
           animate={{ x: ["-40%", "0%"] }}
           transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
           className="
-      absolute top-16 whitespace-nowrap text-[120px] font-black uppercase tracking-[0.28em]
-      text-slate-400/10
-      dark:text-white/5
-    "
+    absolute top-12 md:top-20 whitespace-nowrap text-[120px] font-black uppercase tracking-[0.28em]
+    text-slate-400/10
+    dark:text-white/5
+  "
         >
           NYSC • SERVICE • HUMILITY • NYSC • SERVICE • HUMILITY • NYSC • SERVICE
           • HUMILITY •
@@ -257,7 +257,7 @@ export default function PortalLandingPage() {
       </div>
 
       {/* ANNOUNCEMENT BAR */}
-      <div className="relative z-20 border-b border-emerald-100/80 bg-emerald-600 text-white dark:border-white/10 dark:bg-emerald-500/15">
+      <div className="relative z-20 hidden md:block border-b border-emerald-100/80 bg-emerald-600 text-white dark:border-white/10 dark:bg-emerald-500/15">
         <div className="mx-auto flex max-w-7xl items-center justify-center gap-2 px-4 py-1.5 text-center text-[11px] sm:text-xs font-medium">
           <BellRing className="h-4 w-4" />
           Important: Corps members can now access registration, clearance, SAED,
@@ -274,11 +274,20 @@ export default function PortalLandingPage() {
               alt="NYSC"
               className="h-12 w-12 object-contain"
             />
-            <div>
-              <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-300 sm:text-base">
+            <div className="flex flex-col leading-tight">
+              <p
+                className="whitespace-nowrap truncate font-semibold tracking-wide
+               text-[clamp(10px,2.6vw,18px)]
+               text-emerald-700 dark:text-emerald-300"
+              >
                 NATIONAL YOUTH SERVICE CORPS
               </p>
-              <p className="text-[11px] uppercase tracking-[0.2em] text-red-500 dark:text-red-300/80">
+
+              <p
+                className="uppercase tracking-[0.25em]
+               text-[clamp(8px,2vw,12px)]
+               text-red-500 dark:text-red-300/80"
+              >
                 Service and Humility
               </p>
             </div>
@@ -305,7 +314,7 @@ export default function PortalLandingPage() {
               onClick={() => navigate("/login")}
               className="rounded-lg bg-emerald-500 px-3 py-1.5 text-xs sm:text-sm font-medium text-white hover:bg-emerald-400 transition"
             >
-              Login Portal
+              Login
             </button>
           </div>
         </div>
@@ -339,7 +348,7 @@ export default function PortalLandingPage() {
               notices in one smooth portal experience.
             </p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-8 flex flex-row gap-3">
               <button
                 onClick={() => navigate("/login")}
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-6 py-3 text-sm font-semibold text-white shadow-[0_16px_40px_rgba(16,185,129,0.25)] transition hover:bg-emerald-500"
@@ -348,7 +357,15 @@ export default function PortalLandingPage() {
                 Login to Portal
               </button>
 
-              <button className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white dark:bg-slate-900 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-white/10 dark:bg-white/5 dark:text-white">
+              <button
+                onClick={() =>
+                  document.getElementById("hero-slider")?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                  })
+                }
+                className="inline-flex flex-1 items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white dark:bg-slate-900 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-white/10 dark:bg-white/5 dark:text-white sm:flex-none sm:px-6"
+              >
                 Explore Services
                 <ArrowRight className="h-4 w-4" />
               </button>
@@ -376,6 +393,7 @@ export default function PortalLandingPage() {
           {/* HERO SLIDER */}
 
           <motion.div
+            id="hero-slider"
             initial={{ opacity: 0, scale: 0.96, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.15 }}
@@ -499,7 +517,7 @@ export default function PortalLandingPage() {
           </h2>
         </div>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {features.map((item, index) => (
             <motion.div
               key={item.title}
@@ -508,15 +526,15 @@ export default function PortalLandingPage() {
               viewport={{ once: true, amount: 0.2 }}
               transition={{ delay: index * 0.05 }}
               whileHover={{ y: -6 }}
-              className="rounded-[28px] border border-slate-200/70 bg-white dark:bg-slate-900 p-6 shadow-[0_12px_36px_rgba(15,23,42,0.05)] backdrop-blur-xl dark:border-white/10 dark:bg-white/5"
+              className="rounded-[24px] border border-slate-200/70 bg-white dark:bg-slate-900 p-4 sm:p-6 shadow-[0_12px_36px_rgba(15,23,42,0.05)] backdrop-blur-xl dark:border-white/10 dark:bg-white/5"
             >
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300">
                 <item.icon className="h-5 w-5" />
               </div>
-              <h3 className="mt-5 text-lg font-semibold text-slate-900 dark:text-white">
+              <h3 className="mt-4 text-base font-semibold sm:text-lg text-slate-900 dark:text-white">
                 {item.title}
               </h3>
-              <p className="mt-2 text-sm leading-7 text-slate-600 dark:text-white/60">
+              <p className="mt-2 text-xs leading-5 sm:text-sm sm:leading-7 text-slate-600 dark:text-white/60">
                 {item.desc}
               </p>
             </motion.div>

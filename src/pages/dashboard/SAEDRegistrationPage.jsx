@@ -261,7 +261,7 @@ export default function SAEDRegistrationPage() {
         {/* TOP STRIP */}
         <div className="grid grid-cols-1 xl:grid-cols-[1.45fr_1fr] gap-6">
           <Card isLight={isLight}>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               <StatCard
                 isLight={isLight}
                 icon={GraduationCap}
@@ -282,6 +282,13 @@ export default function SAEDRegistrationPage() {
                 title="Attendance"
                 value={`${attendanceSummary.percentage}%`}
                 subtitle="Training attendance rate"
+              />
+              <StatCard
+                isLight={isLight}
+                icon={Award}
+                title="Certificate"
+                value={registered ? "In Progress" : "Locked"}
+                subtitle="Completion certificate"
               />
             </div>
 
@@ -372,7 +379,7 @@ export default function SAEDRegistrationPage() {
                   isLight ? "text-slate-900" : "text-white"
                 }`}
               >
-                10 Mar 2026
+                10 Jun 2025
               </h3>
               <p
                 className={`mt-1 text-sm ${
@@ -577,7 +584,7 @@ export default function SAEDRegistrationPage() {
                           {item.day}
                         </p>
                         <h4
-                          className={`mt-1 text-sm font-medium ${
+                          className={`mt-1 text-lg sm:text-2xl font-semibold tracking-tight ${
                             isLight ? "text-slate-900" : "text-white"
                           }`}
                         >
@@ -1000,8 +1007,8 @@ function StatCard({ icon: Icon, title, value, subtitle, isLight }) {
     <div
       className={`rounded-[24px] border p-4 ${
         isLight
-          ? "border-slate-200/70 bg-slate-50/80"
-          : "border-white/10 bg-white/5"
+          ? "border-slate-200/70 bg-gradient-to-br from-white to-slate-50"
+          : "border-white/10 bg-gradient-to-br from-white/5 to-white/10"
       }`}
     >
       <div

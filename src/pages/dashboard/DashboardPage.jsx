@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useTheme } from "next-themes";
@@ -55,23 +56,25 @@ function getNoticeStyles(type, isLight) {
 function StatPill({ icon: Icon, label, value, isLight }) {
   return (
     <div
-      className={`group rounded-2xl border px-3 py-2.5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 ${
+      className={`group rounded-2xl border px-3 py-2.5 backdrop-blur-xl
+      transition-all duration-300 hover:-translate-y-0.5 ${
         isLight
           ? "border-transparent bg-slate-100/70 hover:bg-slate-100"
           : "border-transparent bg-white/[0.04] hover:bg-white/[0.07]"
       }`}
     >
       <div
-        className={`mb-2 flex items-center gap-2 ${
-          isLight ? "text-slate-500" : "text-white/60"
+        className={`mb-1.5 flex items-center gap-2 ${
+          isLight ? "text-slate-500" : "text-white/55"
         }`}
       >
         <Icon className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
-        <span className="text-xs uppercase tracking-[0.18em]">{label}</span>
+        <span className="text-[10px] uppercase tracking-[0.16em]">{label}</span>
       </div>
+
       <div
-        className={`text-[13px] sm:text-sm font-medium ${
-          isLight ? "text-slate-900" : "text-white"
+        className={`text-[12.5px] sm:text-sm font-medium leading-tight ${
+          isLight ? "text-slate-900" : "text-white/80"
         }`}
       >
         {value}
@@ -79,6 +82,7 @@ function StatPill({ icon: Icon, label, value, isLight }) {
     </div>
   );
 }
+<div className="grid grid-cols-1 gap-3 sm:grid-cols-2"></div>;
 
 function NoticeCard({ notice, isLight }) {
   return (
@@ -657,18 +661,23 @@ function SummaryRow({ label, value, isLight }) {
     </div>
   );
 }
-function QuickAction({ icon: Icon, label, isLight }) {
+
+function QuickAction({ icon: Icon, label, isLight, to }) {
+  const navigate = useNavigate();
+
   return (
     <button
       type="button"
-      className={`group flex items-center gap-3 rounded-2xl px-4 py-4 text-left text-sm transition-all duration-300 hover:-translate-y-0.5 ${
+      onClick={() => navigate(to)}
+      className={`group flex items-center gap-3 rounded-2xl px-3 py-3 sm:px-4 sm:py-4
+      text-left transition-all duration-300 hover:-translate-y-0.5 ${
         isLight
           ? "bg-slate-100/70 hover:bg-slate-100"
           : "bg-white/[0.04] hover:bg-white/[0.07]"
       }`}
     >
       <div
-        className={`rounded-xl p-2 ${
+        className={`flex h-9 w-9 items-center justify-center rounded-xl ${
           isLight ? "bg-emerald-50" : "bg-emerald-500/10"
         }`}
       >
@@ -678,7 +687,10 @@ function QuickAction({ icon: Icon, label, isLight }) {
           }`}
         />
       </div>
-      <span className="font-medium">{label}</span>
+
+      <span className="text-[13px] sm:text-sm font-medium leading-tight">
+        {label}
+      </span>
     </button>
   );
 }
@@ -923,7 +935,7 @@ transition-all duration-300"
                     />
                   </div>
                 </div>
-                <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-2 xl:grid-cols-3">
                   <StatPill
                     icon={UserCircle2}
                     label="Name"
@@ -1108,25 +1120,32 @@ transition-all duration-300"
                   >
                     Quick Actions
                   </h3>
-                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <div className="grid grid-cols-2 gap-3">
                     <QuickAction
                       icon={FileEdit}
                       label="Course Correction"
+                      to="/course-correction"
                       isLight={isLight}
                     />
+
                     <QuickAction
                       icon={FileText}
                       label="PPA Letter"
+                      to="/ppa-letter"
                       isLight={isLight}
                     />
+
                     <QuickAction
                       icon={ShieldCheck}
                       label="LGA Clearance"
+                      to="/lga-clearance"
                       isLight={isLight}
                     />
+
                     <QuickAction
                       icon={Briefcase}
                       label="SAED Registration"
+                      to="/saed-registration"
                       isLight={isLight}
                     />
                   </div>
