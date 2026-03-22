@@ -121,36 +121,40 @@ function NotificationDropdown({ open, notifications, onClose, isLight }) {
     <AnimatePresence>
       {open && (
         <>
-          {/* BACKDROP (mobile only) */}
+          {/* BACKDROP */}
           <motion.div
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 50, opacity: 0 }}
-            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[9998] bg-black/40 backdrop-blur-sm"
+            onClick={onClose}
+          />
+
+          {/* BOTTOM SHEET */}
+          <motion.div
+            initial={{ y: "100%" }}
+            animate={{ y: "0%" }}
+            exit={{ y: "100%" }}
+            transition={{ type: "spring", damping: 28, stiffness: 260 }}
             drag="y"
-            dragDirectionLock
             dragConstraints={{ top: 0, bottom: 300 }}
-            dragElastic={0.25}
+            dragElastic={0.15}
             onDragEnd={(e, info) => {
-              if (info.offset.y > 120) {
-                onClose();
-              }
+              if (info.offset.y > 120) onClose();
             }}
-            style={{ willChange: "transform, opacity" }}
-            className={`z-[9999] border shadow-xl transition-all transform-gpu
-  ${isLight ? "bg-white border-slate-200" : "bg-slate-900 border-white/10"}
-
-  fixed bottom-0 left-0 right-0 w-full
-  max-h-[80vh] flex flex-col
-  rounded-t-3xl p-4
-
-  sm:absolute sm:left-auto sm:bottom-auto 
-  sm:top-16 sm:left-4 sm:w-[320px]
-  sm:max-h-[700px] sm:rounded-2xl sm:p-2 pb-4 sm:pb-5`}
+            className={`
+              fixed bottom-0 left-0 right-0 z-[9999]
+              max-h-[80vh] w-full
+              rounded-t-3xl p-4
+              flex flex-col
+              shadow-2xl
+              ${isLight ? "bg-white border-slate-200" : "bg-slate-900 border-white/10"}
+            `}
           >
-            {/* DRAG HANDLE (mobile only) */}
-            <div className="mb-3 flex justify-center sm:hidden">
-              <div className="h-1.5 w-12 rounded-full bg-slate-300 dark:bg-white/20 transition-all duration-300 hover:w-16" />
+            {/* DRAG HANDLE */}
+            <div className="mb-3 flex justify-center">
+              <div className="h-1.5 w-12 rounded-full bg-slate-300 dark:bg-white/20" />
             </div>
 
             {/* HEADER */}
@@ -164,12 +168,11 @@ function NotificationDropdown({ open, notifications, onClose, isLight }) {
               </h3>
 
               <button
-                type="button"
                 onClick={onClose}
-                className={`rounded-lg p-1 transition ${
+                className={`rounded-lg p-1 ${
                   isLight
-                    ? "text-slate-500 hover:bg-slate-100 hover:text-slate-900"
-                    : "text-white/60 hover:bg-white/10 hover:text-white"
+                    ? "text-slate-500 hover:bg-slate-100"
+                    : "text-white/60 hover:bg-white/10"
                 }`}
               >
                 <X className="h-4 w-4" />
@@ -177,18 +180,18 @@ function NotificationDropdown({ open, notifications, onClose, isLight }) {
             </div>
 
             {/* LIST */}
-            <div className="space-y-2 pb-4 overflow-y-auto pr-1 max-h-[65vh]">
+            <div className="space-y-2 overflow-y-auto pr-1 pb-4 max-h-[60vh]">
               {notifications.map((item) => (
                 <div
                   key={item.id}
-                  className={`rounded-2xl border p-3 transition-all duration-300 ${
+                  className={`rounded-2xl border p-3 ${
                     isLight
-                      ? "border-transparent bg-slate-100/60 hover:bg-emerald-50"
-                      : "border-transparent bg-white/[0.04] hover:bg-white/[0.07]"
+                      ? "bg-slate-100/60 hover:bg-emerald-50"
+                      : "bg-white/[0.04] hover:bg-white/[0.07]"
                   }`}
                 >
                   <div
-                    className={`mb-1 text-[13px] sm:text-sm font-medium ${
+                    className={`mb-1 text-sm font-medium ${
                       isLight ? "text-slate-900" : "text-white"
                     }`}
                   >
@@ -196,7 +199,7 @@ function NotificationDropdown({ open, notifications, onClose, isLight }) {
                   </div>
 
                   <p
-                    className={`text-xs leading-6 ${
+                    className={`text-xs ${
                       isLight ? "text-slate-600" : "text-white/65"
                     }`}
                   >
