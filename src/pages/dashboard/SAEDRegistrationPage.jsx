@@ -55,7 +55,7 @@ const notifications = [
   {
     id: 3,
     title: "Monthly clearance scheduled",
-    message: "Your next LGA clearance is set for Monday, 04/03/2026.",
+    message: "Your next LGA clearance is set for Monday, 11/03/2026.",
     time: "2h ago",
     read: false,
   },

@@ -42,7 +42,7 @@ const notifications = [
   {
     id: 3,
     title: "Monthly clearance scheduled",
-    message: "Your next LGA clearance is set for Monday, 04/03/2026.",
+    message: "Your next LGA clearance is set for Monday, 11/03/2026.",
     time: "2h ago",
     read: false,
   },
@@ -106,13 +106,13 @@ export default function PPALetterPage() {
 
   // MOCK PPA DATA (replace with API later)
   const ppa = {
-    organization: "Federal Ministry of Agriculture",
+    organization: "National Institute for Medical Research",
     address: "Area 11, Garki, Abuja",
     supervisor: "Mr. Adewale Yusuf",
     phone: "08012345678",
     email: "ppa@nigeria.gov.ng",
     status: "Assigned",
-    reportingDate: "12 April 2026",
+    reportingDate: "10 July 2025",
   };
 
   {
